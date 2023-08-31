@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: microservice_one
+management:
+  health:
+    circuit-breakers:
+      enabled: true
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      activity:
+        register-health-indicator: true
+        event-consumer-buffer-size: 10
+        sliding-window-size: 5
+        sliding-window-type: count_based
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 2000s
+        permitted-number-of-calls-in-half-open-state: 5
+        automatic-transition-from-open-to-half-open-enabled: true
+
